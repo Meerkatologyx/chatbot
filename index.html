@@ -1,0 +1,41 @@
+        "movies": ["Cinema is pure magic!", "Films transport us to new worlds!", "What genres light you up?", "Movies tell the best stories!", "Every film is an adventure!", "Movies make life more exciting!", "What movie are you watching?", "Let's watch a movie together!", "Movies are a great form of art!", "Movies can make us feel everything!", "Movies tell us such great stories!", "I love to watch movies all day!", "Movies are my passion!", "What is your favorite movie?", "Movies can be the best form of entertainment!"],
+        "games": ["Gaming is pure joy!", "What's your favorite title?", "Games bring people together!", "Gaming creates amazing experiences!", "Let's talk about your epic gaming moments!", "Gaming can be so fun!", "Let's game together!", "What games do you play?", "Gaming is very competitive!", "I love to game all day!", "Gaming can be a passion!", "What are some of your best gaming moments?", "Gaming is for everyone!", "Gaming is the best!", "What is your favorite game genre?"],
+        "art": ["Art is a form of expression!", "Art can be so beautiful!", "Let's discuss some great art!", "Art is everywhere!", "Art is a form of creativity!", "What kind of art do you like?", "Let's make some art together!", "I love art!", "Art can be very powerful!", "Art is a great way to express our feelings!", "Art is the way to creativity!", "What is your favorite form of art?", "Art is the best!", "Art is for everyone!", "Art is our passion!"],
+            "books": ["Books are magical portals!", "Reading opens minds!", "Stories shape our world!", "What page-turner has you hooked?", "Books are brain food!", "Books are a form of art!", "What is your favorite book?", "Let's discuss some great books!", "I love to read books all day!", "Reading opens up new worlds!", "Books make you think!", "Books are very important!", "What kind of books do you enjoy?", "Books tell us so many great stories!", "Books are the key to knowledge!"],
+            "tv shows": ["TV shows are the best!", "What TV show are you currently watching?", "TV shows are a great form of entertainment!", "TV shows make us happy!", "Let's discuss your favorite TV shows!", "I love to watch TV shows all day!", "What is your favorite TV show?", "TV shows bring us so much joy!", "TV shows can be so great!", "TV shows are a great way to relax!", "TV shows are very interesting!", "TV shows can also be so great!", "TV shows are the perfect way to unwind!", "TV shows can make you laugh!", "TV shows are such a great form of art!"],
+            "podcasts": ["Podcasts can be very educational!", "What podcast are you currently listening to?", "Let's discuss some great podcasts!", "Podcasts are a great way to learn!", "Podcasts can be so relaxing!", "I love listening to podcasts all day!", "Podcasts are a very important source of information!", "Podcasts can be so fascinating!", "What is your favorite podcast?", "Podcasts are the best!", "Podcasts are a great way to pass time!", "Podcasts are also very entertaining!", "Podcasts can make you think!", "Podcasts are awesome!", "Podcasts are always great!"],
+        "concerts": ["Concerts are a great way to enjoy live music!", "What was the best concert you've been to?", "Concerts are so much fun!", "Let's go to a concert together!", "Concerts are a very important form of live music!", "Concerts are very fun to be at!", "I love concerts so much!", "Concerts bring us closer together!", "Concerts are very energetic!", "Concerts are the best!", "What kind of concerts do you like?", "Concerts are a blast!", "Concerts make us feel free!", "Concerts are such a great way to enjoy music!", "Concerts are a part of our lives!"],
+        "theater": ["Going to the theater is such a great experience!", "Have you seen any good plays lately?", "Theater is such a great form of art!", "I love going to the theater!", "Theater can bring us so much joy!", "Let's discuss your favorite theatrical play!", "Theater is amazing!", "Theater is such an interesting form of entertainment!", "Theater can make us feel everything!", "Theater can teach us so much!", "Theater is the best!", "Theater is a very important form of art!", "Theater can change the world!", "Theater is awesome!", "Theater is so cool!"],
+        
+        // --- FOOD & DRINKS ---
+            "food": ["Food is life's greatest pleasure!", "What flavors make you happy?", "Cooking is pure creativity!", "Food brings people together!", "Every meal is an adventure!", "Food makes everything better!", "What kind of food do you like?", "Let's discuss your favorite foods!", "I love food!", "Food can be so delicious!", "Food is essential!", "Let's cook a great meal together!", "Food brings us closer together!", "Food can be anything!", "Food is our passion!"],
+            "coffee": ["Coffee is liquid gold!", "Nothing beats that first sip!", "Coffee powers the world!", "The perfect way to start the day!", "Coffee makes everything better!", "I love the smell of coffee!", "Coffee is essential for me!", "Let's enjoy a coffee together!", "Coffee is very important!", "Coffee makes the world go round!", "Coffee makes me happy!"
+            ]
+        };
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function showTypingIndicator() {
+            const indicator = document.createElement('div');
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatContainer.appendChild(indicator);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return indicator;
+        }
+
+        function removeTypingIndicator(indicator) {
+            indicator.remove();
+        }
+
+        function appendMessage(message, isUser) {
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${isUser ? 'user-message' : 'bot-message'}`;
