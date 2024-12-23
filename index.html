@@ -1,15 +1,293 @@
-        "movies": ["Cinema is pure magic!", "Films transport us to new worlds!", "What genres light you up?", "Movies tell the best stories!", "Every film is an adventure!", "Movies make life more exciting!", "What movie are you watching?", "Let's watch a movie together!", "Movies are a great form of art!", "Movies can make us feel everything!", "Movies tell us such great stories!", "I love to watch movies all day!", "Movies are my passion!", "What is your favorite movie?", "Movies can be the best form of entertainment!"],
-        "games": ["Gaming is pure joy!", "What's your favorite title?", "Games bring people together!", "Gaming creates amazing experiences!", "Let's talk about your epic gaming moments!", "Gaming can be so fun!", "Let's game together!", "What games do you play?", "Gaming is very competitive!", "I love to game all day!", "Gaming can be a passion!", "What are some of your best gaming moments?", "Gaming is for everyone!", "Gaming is the best!", "What is your favorite game genre?"],
-        "art": ["Art is a form of expression!", "Art can be so beautiful!", "Let's discuss some great art!", "Art is everywhere!", "Art is a form of creativity!", "What kind of art do you like?", "Let's make some art together!", "I love art!", "Art can be very powerful!", "Art is a great way to express our feelings!", "Art is the way to creativity!", "What is your favorite form of art?", "Art is the best!", "Art is for everyone!", "Art is our passion!"],
-            "books": ["Books are magical portals!", "Reading opens minds!", "Stories shape our world!", "What page-turner has you hooked?", "Books are brain food!", "Books are a form of art!", "What is your favorite book?", "Let's discuss some great books!", "I love to read books all day!", "Reading opens up new worlds!", "Books make you think!", "Books are very important!", "What kind of books do you enjoy?", "Books tell us so many great stories!", "Books are the key to knowledge!"],
-            "tv shows": ["TV shows are the best!", "What TV show are you currently watching?", "TV shows are a great form of entertainment!", "TV shows make us happy!", "Let's discuss your favorite TV shows!", "I love to watch TV shows all day!", "What is your favorite TV show?", "TV shows bring us so much joy!", "TV shows can be so great!", "TV shows are a great way to relax!", "TV shows are very interesting!", "TV shows can also be so great!", "TV shows are the perfect way to unwind!", "TV shows can make you laugh!", "TV shows are such a great form of art!"],
-            "podcasts": ["Podcasts can be very educational!", "What podcast are you currently listening to?", "Let's discuss some great podcasts!", "Podcasts are a great way to learn!", "Podcasts can be so relaxing!", "I love listening to podcasts all day!", "Podcasts are a very important source of information!", "Podcasts can be so fascinating!", "What is your favorite podcast?", "Podcasts are the best!", "Podcasts are a great way to pass time!", "Podcasts are also very entertaining!", "Podcasts can make you think!", "Podcasts are awesome!", "Podcasts are always great!"],
-        "concerts": ["Concerts are a great way to enjoy live music!", "What was the best concert you've been to?", "Concerts are so much fun!", "Let's go to a concert together!", "Concerts are a very important form of live music!", "Concerts are very fun to be at!", "I love concerts so much!", "Concerts bring us closer together!", "Concerts are very energetic!", "Concerts are the best!", "What kind of concerts do you like?", "Concerts are a blast!", "Concerts make us feel free!", "Concerts are such a great way to enjoy music!", "Concerts are a part of our lives!"],
-        "theater": ["Going to the theater is such a great experience!", "Have you seen any good plays lately?", "Theater is such a great form of art!", "I love going to the theater!", "Theater can bring us so much joy!", "Let's discuss your favorite theatrical play!", "Theater is amazing!", "Theater is such an interesting form of entertainment!", "Theater can make us feel everything!", "Theater can teach us so much!", "Theater is the best!", "Theater is a very important form of art!", "Theater can change the world!", "Theater is awesome!", "Theater is so cool!"],
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Chat Bot</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #111111, #000000);
+            box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .chat-bubble {
+            max-width: 70%;
+            margin: 10px 0;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            line-height: 1.5;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-message {
+            background-color: #2a2a2a;
+            align-self: flex-end;
+            color: white;
+            border-top-right-radius: 5px;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .bot-message {
+            background-color: #1a1a1a;
+            align-self: flex-start;
+            border-top-left-radius: 5px;
+            animation: fadeIn 0.4s ease-in-out, rainbowPulse 3s ease-out;
+            position: relative;
+        }
+
+       .bot-message::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                #800000, #804900, #808000, #248000, 
+                #00806a, #001580, #3d0080, #800064, #800000);
+            border-radius: 22px;
+            z-index: -1;
+            animation: rainbowMove 3s ease-out;
+            background-size: 400%;
+            filter: blur(2px);
+            opacity: 0.4;
+        }
+
+        .input-container {
+            display: flex;
+            padding: 15px;
+            background-color: #0a0a0a;
+            box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-container input {
+            flex-grow: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .input-container input:focus {
+            box-shadow: 0 0 10px transparent;
+            animation: rainbow-glow 3s linear infinite;
+        }
+
+        .input-container button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 25px;
+            background-color: #2979ff;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .input-container button:hover {
+            background-color: #1b6adc;
+            transform: scale(1.05);
+        }
+
+        .input-container button:active {
+            transform: scale(1);
+        }
+
+        @keyframes rainbow-glow {
+            0% { box-shadow: 0 0 10px #ff0000; }
+            16.666% { box-shadow: 0 0 10px #ff9900; }
+            33.333% { box-shadow: 0 0 10px #ffff00; }
+            50% { box-shadow: 0 0 10px #33ff00; }
+            66.666% { box-shadow: 0 0 10px #0099ff; }
+            83.333% { box-shadow: 0 0 10px #6633ff; }
+            100% { box-shadow: 0 0 10px #ff0000; }
+        }
+
+        @keyframes rainbowPulse {
+            0% { transform: scale(0.95); }
+            15% { transform: scale(1); }
+            30% { transform: scale(1.02); }
+            45% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes rainbowMove {
+            0% { 
+                background-position: 0 0;
+                opacity: 0;
+            }
+            15% { opacity: 0.4; }
+            30% { opacity: 0.4; }
+            45% { opacity: 0.3; }
+            60% { opacity: 0.2; }
+            100% { 
+                background-position: 100% 0;
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background-color: #2a2a2a;
+            border-radius: 4px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background-color: #2979ff;
+        }
+
+        .typing-indicator {
+            display: flex;
+            padding: 10px;
+            margin: 10px 0;
+            align-self: flex-start;
+        }
         
-        // --- FOOD & DRINKS ---
-            "food": ["Food is life's greatest pleasure!", "What flavors make you happy?", "Cooking is pure creativity!", "Food brings people together!", "Every meal is an adventure!", "Food makes everything better!", "What kind of food do you like?", "Let's discuss your favorite foods!", "I love food!", "Food can be so delicious!", "Food is essential!", "Let's cook a great meal together!", "Food brings us closer together!", "Food can be anything!", "Food is our passion!"],
-            "coffee": ["Coffee is liquid gold!", "Nothing beats that first sip!", "Coffee powers the world!", "The perfect way to start the day!", "Coffee makes everything better!", "I love the smell of coffee!", "Coffee is essential for me!", "Let's enjoy a coffee together!", "Coffee is very important!", "Coffee makes the world go round!", "Coffee makes me happy!"
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            margin: 0 3px;
+            background-color: #2979ff;
+            border-radius: 50%;
+            animation: typing 1s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container" id="chat-container"></div>
+    <div class="input-container">
+        <input type="text" id="user-input" placeholder="Let's chat! Type your message..." autocomplete="off">
+        <button id="send-button" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        const botResponses = {
+  // --- GREETINGS ---
+  "hello": ["Hi there! Great to see you!", "Hello! How can I brighten your day?", "Hey! Ready for an awesome chat!", "Welcome! Let's make today amazing!", "Hello! Your presence makes my day better!", "Greetings! What's up?", "Nice to see you!", "Hey there!", "What's happening?", "Hello friend!", "Good to see you!", "Hey, how's it going?", "A warm hello to you!", "Hi, nice to meet you!", "Hello and welcome!"],
+  "hi": ["Hello! Ready for some great conversation!", "Hi there! What's on your mind?", "Hey! Let's chat!", "Hi! So excited you're here!", "Hello! Let's make this conversation fantastic!", "Hi! What's new?", "Hey! Glad you're here.", "Hi! How can I help?", "Hey, what's going on?", "Hi, it's great to see you!", "Hey, what's the buzz?", "Hi, ready to talk?", "Hi, anything exciting?", "Hi! Let's get started!", "Hey, nice to see you!"],
+  "hey": ["Hello! Looking forward to our chat!", "Hi there! What would you like to talk about?", "Hey! Ready when you are!", "Hey! Let's make today count!", "Hi! Your energy is contagious!", "Hey! What can I do for you?", "Hey! Ready to go!", "Hey! Let's have some fun!", "Hey, great to hear from you!", "Hey, what's the scoop?", "Hey, what's up?", "Hey! Let's connect!", "Hey! Let's chat soon!", "Hey! What are you up to?", "Hey! You're a bright spot!"],
+    "good morning": ["Good morning to you! Ready to start the day?", "A beautiful morning, isn't it?", "Good morning! How are you feeling?", "Wishing you a wonderful morning!", "Good morning! Hope your day is great!", "Good morning! Let's make it awesome!", "Hello, good morning!", "Good morning! Time to shine!", "Rise and shine! Good morning!", "What a lovely morning!", "Good morning, sunshine!", "Hope you're having a great morning!", "Good morning! Let's make the most of it!", "Good morning, excited to chat!", "Good morning! Let's get going!"],
+    "good afternoon": ["Good afternoon! How's your day been?", "Hope your afternoon is going well!", "Good afternoon! Anything exciting happening?", "Wishing you a pleasant afternoon!", "Good afternoon! Ready for some chat?", "Hello, good afternoon!", "Good afternoon, what's new?", "Enjoying the afternoon?", "Good afternoon! What's the buzz?", "Hope you're having a fantastic afternoon!", "Good afternoon! Let's talk!", "Good afternoon! How are you doing today?", "Good afternoon! Let's make it special!", "Good afternoon! What's on your mind?", "Good afternoon, ready to chat!"],
+    "good evening": ["Good evening! How did your day go?", "Hope you're having a relaxing evening!", "Good evening! What are you up to?", "Wishing you a wonderful evening!", "Good evening! Ready to unwind?", "Hello, good evening!", "Good evening, feeling chill?", "Enjoying the evening?", "Good evening! What's the plan?", "Hope your evening is going great!", "Good evening! Let's get cozy!", "Good evening! What's on the agenda?", "Good evening! Time to relax!", "Good evening! Let's have a good time!", "Good evening, ready for some chat?"],
+    "howdy": ["Howdy partner! Ready for a chat?", "Howdy! What can I do for ya?", "Howdy! Nice to see you around!", "Howdy! What brings you here?", "Howdy! Ready to talk?", "Hey, howdy! What's happening?", "Howdy! How's your day going?", "Howdy there! Glad you're here!", "Howdy, neighbor! What's new?", "Howdy! Let's get this chat started!", "Howdy, friend! Ready to connect?", "Howdy! Let's have some fun!", "Howdy! Let's dive in!", "Howdy! Excited to chat with you!", "Howdy, what's up?"],
+    "yo": ["Yo! What's good?", "Yo! How's it going?", "Yo! Ready to chat?", "Yo! What's up, friend?", "Yo! Nice to see you!", "Yo! What's the word?", "Yo! How's your day?", "Yo! Let's get this party started!", "Yo! Glad you're here!", "Yo! What's on your mind?", "Yo! Let's catch up!", "Yo! Ready to roll?", "Yo! What's new?", "Yo! What are you up to?", "Yo, let's go!"],
+    "sup": ["Sup? What's happening?", "Sup, dude? Ready to chat?", "Sup! How's it going?", "Sup! Anything new?", "Sup! What's on your mind?", "Sup! Nice to see you!", "Sup! What's the scoop?", "Sup! Let's get to it!", "Sup! Ready to roll?", "Sup, friend! Glad you're here!", "Sup, what's up?", "Sup, let's connect!", "Sup! What's on the agenda?", "Sup! Let's dive in!", "Sup! What's the word?"],
+    "whats up": ["What's up? How's it going?", "What's up? Ready for a chat?", "What's up? Anything new?", "What's up? What's on your mind?", "What's up? Nice to see you!", "What's up? What's the word?", "What's up? Let's get to it!", "What's up? Ready to roll?", "What's up? Glad you're here!", "What's up, friend?", "What's up? Let's connect!", "What's up? What's the buzz?", "What's up? What's on tap?", "What's up? Let's dive in!", "What's up? What are you up to?"],
+    "how are you": ["I'm doing great, thanks for asking! How are you?", "I'm doing well, thanks! How about you?", "I'm fantastic! How can I help you today?", "I'm good! How are you feeling?", "I'm fine, thank you! What about you?", "I'm doing just great! How are you doing?", "I'm okay, and you?", "I'm wonderful, thank you! How are you doing?", "I'm feeling fantastic, thank you! And you?", "I'm good, how's your day been?", "I'm doing well, thank you! How are you today?", "I'm great, thanks! What about you?", "I'm doing fine, thank you for asking! How are you?", "I'm excellent, thank you! How are you feeling today?", "I'm super, thanks for asking! How are things with you?"],
+    "hows it going": ["It's going great, thanks for asking! How about you?", "It's going well, thanks! How's your day?", "It's going awesome! What about you?", "It's going fine! How are you doing?", "Things are going well! How are you feeling?", "It's going great, what about your day?", "It's going okay, and you?", "Things are good, thank you for asking! How are you doing?", "It's going fantastic, thank you! How about your day?", "It's going well, thanks! How's everything on your end?", "It's going well, thank you for asking! How is your day so far?", "It's going great! How are you?", "It's going fine, thanks for asking! How is your day?", "It's going superb, thank you! What about you?", "It's going fantastic, thank you! How are things your way?"],
+    "nice to see you": ["Nice to see you too! What's up?", "It's great to see you as well! Ready to chat?", "Nice to see you! How can I help?", "The pleasure is mine! How's your day going?", "I'm glad to see you too! What's new?", "Nice to see you! Let's have a great conversation!", "It's nice to see you as well! How are you?", "Nice to see you too! What's on your mind?", "It's nice to see you again! Let's catch up.", "Nice to see you! Let's get started!", "Nice to see you as well! What's the buzz?", "It's nice to see you! What can I do for you?", "Nice to see you! Ready to roll?", "It's great to see you! How are you doing?", "Nice to see you! Let's make the most of it!"],
+  
+  // --- EMOTIONS & FEELINGS ---
+  "happy": ["That's wonderful! Happiness is contagious!", "Your joy brightens everything!", "Keep spreading that amazing energy!", "Nothing better than feeling happy!", "Your happiness makes the world better!", "I love to see you happy!", "Happiness looks good on you!", "Awesome to hear that!", "I'm so glad for you!", "Keep that joyful vibe going!", "That's absolutely fantastic!", "Such a wonderful feeling!", "The world is brighter with your happiness!", "Happiness is a great thing!", "I love your happiness!"],
+  "sad": ["Let's find something to smile about together!", "Tomorrow brings new opportunities!", "You're stronger than you know!", "Let's focus on the bright side!", "Every cloud has a silver lining!", "It's okay to feel sad sometimes.", "I'm here for you, no matter what.", "Let's try to turn that frown upside down.", "Things will get better, keep your head up.", "Sadness is a part of life.", "Sometimes you just need to let it out.", "I'm here to listen if you need to vent.", "Remember to take care of yourself.", "It's okay to feel the way you do.", "Reach out if you need support."],
+  "excited": ["Your enthusiasm is amazing!", "That's the spirit!", "Your excitement is contagious!", "Love that energy!", "Keep that fantastic vibe going!", "Your excitement is palpable!", "I'm excited for you!", "That's awesome news!", "Keep that amazing feeling!", "I'm feeling excited too!", "Such an amazing emotion!", "Keep that fire burning!", "Let's go!", "That's what I like to hear!", "Your excitement is inspiring!"],
+    "angry": ["It's okay to feel angry, let's work through it.", "Take a deep breath, things will be alright.", "Let's try to find a solution to what's making you angry.", "Anger can be tough, I'm here to listen.", "Remember to approach with calmness.", "Take a step back, and let's talk.", "It's important to express your anger constructively.", "Let's find out what's causing your anger.", "Your feelings are valid, let's address it.", "It's okay to feel this way, let's understand it.", "Let's try to bring back calmness.", "Let's try to decompress a bit.", "Take a moment to relax.", "Anger is a natural emotion.", "Let's communicate what you are feeling."],
+    "frustrated": ["It's frustrating when things don't go as planned.", "Let's try to find a way out of this frustration.", "Don't let it get to you, you've got this!", "It's normal to feel frustrated sometimes.", "I know things can get challenging, but keep going.", "Let's break down the problem and tackle it step by step.", "Let's focus on what we can control.", "Sometimes you just need to take a break.", "You're doing a good job, stay positive!", "I'm here to support you through this.", "Remember your strengths.", "Let's find solutions together.", "Keep a positive mindset.", "It's okay to feel this way, you're not alone.", "Let's find a path forward."],
+    "nervous": ["It's alright to feel nervous, it's completely normal.", "Take a deep breath and relax, you'll do great.", "Nervousness is just a sign that you care.", "Don't worry, you've got this!", "I believe in you, no matter what.", "Let's try to calm down a bit.", "I'm here with you every step of the way.", "Sometimes nervousness can bring the best out of you.", "It's okay to feel a little nervous, just keep going.", "Remember you've got this under control.", "Let's stay positive!", "Take it one step at a time.", "Embrace this feeling and move forward.", "I'm here to support you through this nervousness.", "Let's take on this challenge together."],
+    "calm": ["That's great! Being calm is such a great feeling.", "I'm glad you're feeling calm and composed.", "It's wonderful to see you at peace.", "Being calm is beneficial for well-being.", "Keep that calmness within you.", "Calm is a great state of mind.", "May your calmness last a long time.", "That calmness is soothing.", "I'm glad to see you are feeling so calm.", "That's how we should all be.", "Calmness is the key to everything.", "Keep practicing your calmness.", "Stay composed, my friend.", "You deserve this calming state.", "Enjoy the peace!"],
+  "tired": ["It's okay to feel tired, you deserve a break.", "Maybe you need to rest and recharge.", "Let's take it easy today.", "It's important to listen to your body.", "Make sure to prioritize self-care.", "Let's find a way to restore your energy.", "It's normal to feel tired after a long day.", "Don't push yourself too hard.", "Rest and relaxation are very important.", "Let's recharge and go!", "I hope you can get some rest soon.", "Try to take a break if possible.", "Let's slow down a bit.", "I'm here for you while you rest.", "Rest is very important."],
+ "bored": ["Boredom is an opportunity for creativity!", "Let's find something fun to do!", "How can I help you alleviate this boredom?", "Let's explore new possibilities together!", "Boredom can lead to inspiration!", "Let's discover what we can do today!", "Let me try to entertain you.", "What do you feel like doing?", "Let's find a great activity for us.", "I know just what we need to do!", "What sounds like fun to you?", "Let's brainstorm some great ideas!", "Let's try something new!", "Let's make something special!", "Let's make today less boring!"],
+  
+  // --- TECH & CODING ---
+  "programming": ["Code is poetry in motion!", "Building the future one line at a time!", "The possibilities in coding are endless!", "What amazing thing are you creating?", "Technology shapes our tomorrow!", "Programming is pure magic!", "Coding makes the impossible possible!", "I love seeing you program!", "What coding challenges are you working on?", "Coding is like building!", "Programming can be very fun!", "I love programming too!", "Programming is limitless!", "What coding language are you working on?", "Coding can be so rewarding!"],
+  "javascript": ["JavaScript makes the web magical!", "Building something awesome with JS?", "JavaScript opens infinite possibilities!", "The web's most versatile language!", "JavaScript is everywhere!", "JavaScript is so dynamic!", "JavaScript is used by millions!", "JavaScript is essential!", "The browser's best friend!", "I love JavaScript so much!", "JavaScript can do so many things!", "With JavaScript, we can make the web better!", "JavaScript makes things more fun!", "JavaScript is so versatile!", "JavaScript is the future of the web!"],
+  "python": ["Python is so powerful!", "Snake charming some code?", "Python makes coding fun!", "Building something cool with Python?", "Python's simplicity is beautiful!", "Python is so readable!", "I love using python!", "Python is a powerful tool!", "Python makes development easy!", "Python is so popular!", "Let's use python!", "Python is always a good choice!", "Python is a great language for beginners!", "Python is so versatile!", "Python can do anything!"],
+  "coding": ["Coding can be a great challenge!", "Coding can create the future!", "Coding is a passion of mine!", "What are you coding today?", "Let's code together!", "I love coding!", "Coding makes the impossible possible!", "Coding is a great thing!", "I love to code every day!", "Coding can be a career!", "Coding makes things more fun!", "Coding is not only a hobby!", "Coding can do great things!", "Coding is a very important skill!", "Let's code all day!"],
+  "software": ["Software is everywhere!", "Software makes life so much easier!", "What software are you using today?", "Software is always improving!", "Let's develop some software together!", "I love software so much!", "Software can do anything!", "Software is so versatile!", "Let's talk about software!", "Software can change the world!", "Software is essential for our world!", "Software is the future!", "Software will always improve!", "Software can do amazing things!", "I'm a software enthusiast!"],
+    "technology": ["Technology is the future!", "Technology is always improving!", "Technology makes life so much easier!", "Technology can do amazing things!", "What are some tech innovations that you're excited about?", "Technology is always advancing!", "Let's discuss some new technology!", "Technology makes our world better!", "I love technology so much!", "Technology can be used for good!", "Technology is very powerful!", "Technology will always be a part of our lives!", "Technology is the key!", "Technology is very important!", "Let's use technology to improve our world!"],
+    "artificial intelligence": ["AI is changing the world!", "Artificial intelligence is the future!", "Let's explore the potential of AI!", "AI is very powerful!", "Artificial intelligence is the key!", "AI will change the future!", "AI is very important!", "Let's develop some AI together!", "I love artificial intelligence!", "AI makes the impossible possible!", "Let's discuss AI!", "Artificial intelligence is fascinating!", "AI is making the world a better place!", "Artificial intelligence is the future of technology!", "I'm a big fan of AI!"],
+     "web development": ["Web development is so dynamic!", "Let's make the web better!", "I love web development!", "Web development is very versatile!", "What website are you developing today?", "Web development is essential!", "Web development is a great skill to have!", "Let's develop the best websites together!", "Web development can be so much fun!", "I love to code websites!", "Web development is the future!", "The web is so important to our world!", "Web development can change the world!", "Web development allows for endless possibilities!", "Web development is a passion of mine!"],
+    "database": ["Databases are so important for our world!", "What kind of database are you using today?", "Databases are essential for any website or application!", "I love databases!", "Databases are very versatile!", "Let's discuss databases!", "Databases are very powerful!", "Databases are very important for businesses!", "Databases can do so much!", "Databases are so interesting!", "Databases are very crucial for development!", "Databases are essential for storage!", "Databases can store limitless amounts of data!", "Let's improve databases!", "Databases are essential for development!"],
+    "algorithm": ["Algorithms are essential in programming!", "What kind of algorithm are you working on today?", "Algorithms can be used for anything!", "Algorithms are very powerful!", "Algorithms can create amazing things!", "I love to work with algorithms!", "Algorithms are very versatile!", "Let's improve algorithms!", "Algorithms can solve anything!", "Algorithms are the bread and butter of computer science!", "Algorithms are very important!", "Algorithms help us be more efficient!", "Let's use algorithms to improve our world!", "Algorithms can be the key!", "Algorithms help computers be more efficient!"],
+   "machine learning": ["Machine learning is the future!", "Machine learning is so dynamic!", "What kind of machine learning models are you working on today?", "Machine learning is essential for AI!", "Machine learning is very powerful!", "Machine learning will change the world!", "Machine learning is the key!", "Machine learning is essential!", "I love machine learning!", "Machine learning is very important!", "Let's use machine learning to improve our world!", "Let's discuss machine learning!", "Machine learning is fascinating!", "Machine learning can do anything!", "Machine learning is the best!"],
+   
+  
+  // --- ENTERTAINMENT ---
+  "music": ["Music moves the soul!", "What beats are you into?", "Music makes life better!", "Your playlist must be fire!", "Music connects everyone!", "Music can be inspiring!", "I love listening to music too!", "What genres do you like?", "Let's share some music!", "Music brings people together!", "Music is a great form of art!", "I love listening to music all day!", "Music is a great way to relax!", "Music makes the world a better place!", "Music can change the world!"],
+  "movies": ["Cinema is pure magic!", "Films transport us to new worlds!", "What genres light you up?", "Movies tell the best stories!", "Every film is an adventure!", "Movies make life more exciting!", "What movie are you watching?", "Let's watch a movie together!", "Movies are a great form of art!", "Movies can make us feel everything!", "Movies tell us such great stories!", "I love to watch movies all day!", "Movies are my passion!", "What is your favorite movie?", "Movies can be the best form of entertainment!"],
+  "games": ["Gaming is pure joy!", "What's your favorite title?", "Games bring people together!", "Gaming creates amazing experiences!", "Let's talk about your epic gaming moments!", "Gaming can be so fun!", "Let's game together!", "What games do you play?", "Gaming is very competitive!", "I love to game all day!", "Gaming can be a passion!", "What are some of your best gaming moments?", "Gaming is for everyone!", "Gaming is the best!", "What is your favorite game genre?"],
+  "art": ["Art is a form of expression!", "Art can be so beautiful!", "Let's discuss some great art!", "Art is everywhere!", "Art is a form of creativity!", "What kind of art do you like?", "Let's make some art together!", "I love art!", "Art can be very powerful!", "Art is a great way to express our feelings!", "Art is the way to creativity!", "What is your favorite form of art?", "Art is the best!", "Art is for everyone!", "Art is our passion!"],
+    "books": ["Books are magical portals!", "Reading opens minds!", "Stories shape our world!", "What page-turner has you hooked?", "Books are brain food!", "Books are a form of art!", "What is your favorite book?", "Let's discuss some great books!", "I love to read books all day!", "Reading opens up new worlds!", "Books make you think!", "Books are very important!", "What kind of books do you enjoy?", "Books tell us so many great stories!", "Books are the key to knowledge!"],
+     "tv shows": ["TV shows are the best!", "What TV show are you currently watching?", "TV shows are a great form of entertainment!", "TV shows make us happy!", "Let's discuss your favorite TV shows!", "I love to watch TV shows all day!", "What is your favorite TV show?", "TV shows bring us so much joy!", "TV shows can be so great!", "TV shows are a great way to relax!", "TV shows are very interesting!", "TV shows can also be so great!", "TV shows are the perfect way to unwind!", "TV shows can make you laugh!", "TV shows are such a great form of art!"],
+    "podcasts": ["Podcasts can be very educational!", "What podcast are you currently listening to?", "Let's discuss some great podcasts!", "Podcasts are a great way to learn!", "Podcasts can be so relaxing!", "I love listening to podcasts all day!", "Podcasts are a very important source of information!", "Podcasts can be so fascinating!", "What is your favorite podcast?", "Podcasts are the best!", "Podcasts are a great way to pass time!", "Podcasts are also very entertaining!", "Podcasts can make you think!", "Podcasts are awesome!", "Podcasts are always great!"],
+   "concerts": ["Concerts are a great way to enjoy live music!", "What was the best concert you've been to?", "Concerts are so much fun!", "Let's go to a concert together!", "Concerts are a very important form of live music!", "Concerts are very fun to be at!", "I love concerts so much!", "Concerts bring us closer together!", "Concerts are very energetic!", "Concerts are the best!", "What kind of concerts do you like?", "Concerts are a blast!", "Concerts make us feel free!", "Concerts are such a great way to enjoy music!", "Concerts are a part of our lives!"],
+   "theater": ["Going to the theater is such a great experience!", "Have you seen any good plays lately?", "Theater is such a great form of art!", "I love going to the theater!", "Theater can bring us so much joy!", "Let's discuss your favorite theatrical play!", "Theater is amazing!", "Theater is such an interesting form of entertainment!", "Theater can make us feel everything!", "Theater can teach us so much!", "Theater is the best!", "Theater is a very important form of art!", "Theater can change the world!", "Theater is awesome!", "Theater is so cool!"],
+   
+  
+  // --- FOOD & DRINKS ---
+    "food": ["Food is life's greatest pleasure!", "What flavors make you happy?", "Cooking is pure creativity!", "Food brings people together!", "Every meal is an adventure!", "Food makes everything better!", "What kind of food do you like?", "Let's discuss your favorite foods!", "I love food!", "Food can be so delicious!", "Food is essential!", "Let's cook a great meal together!", "Food brings us closer together!", "Food can be anything!", "Food is our passion!"],
+    "coffee": ["Coffee is liquid gold!", "Nothing beats that first sip!", "Coffee powers the world!", "The perfect way to start the day!", "Coffee makes everything better!", "I love the smell of coffee!", "Coffee is essential for me!", "Let's enjoy a coffee together!", "Coffee is very important!", "Coffee makes the world go round!", "Coffee makes me happy!", "Coffee can be so relaxing!", "What kind of coffee do you enjoy?", "Coffee is my fuel!", "Coffee is the best!"],
+    "pizza": ["Pizza is pure happiness!", "Can't go wrong with pizza!", "The perfect food exists!", "Pizza makes everything better!", "Every slice is a slice of joy!", "Pizza is the best!", "Pizza is a crowd pleaser!", "Let's order a pizza!", "What is your favorite kind of pizza?", "I love pizza so much!", "Pizza can be anything!", "Pizza is so delicious!", "Pizza makes me happy!", "Pizza is the most fun food!", "Pizza is always a great choice!"],
+    "tea": ["Tea is so relaxing!", "What kind of tea do you enjoy?", "Tea is the best!", "Let's drink some tea together!", "Tea is a very important drink!", "Tea is good for our health!", "Tea can be so soothing!", "I love drinking tea!", "What are some of your favorite teas?", "Tea makes me feel good!", "Tea can be enjoyed by everyone!", "Tea is so enjoyable!", "Tea is my passion!", "Tea is the key!", "Tea makes everything better!"],
+    "sushi": ["Sushi is so delicious!", "Have you ever tried sushi?", "Sushi is a very unique dish!", "I love sushi so much!", "Sushi can be very fun!", "Sushi is a perfect dish!", "What kind of sushi do you like?", "Let's order some sushi!", "Sushi is a very interesting dish!", "Sushi makes me happy!", "Sushi can be enjoyed by all!", "Sushi can be healthy!", "Sushi is my passion!", "Sushi is the best!", "Sushi is such a cool meal!"],
+   "desserts": ["Desserts are so delicious!", "Desserts make everything better!", "I love desserts so much!", "Desserts are always a good choice!", "What kind of desserts do you like?", "Let's have some dessert!", "Desserts are very important!", "Desserts are very sweet!", "Desserts bring us joy!", "Desserts can be very fun!", "Desserts are perfect!", "Desserts are my favorite!", "What is your favorite dessert?", "Desserts are essential!", "Desserts can be enjoyed by everyone!"],
+   "chocolate": ["Chocolate is my favorite!", "Chocolate makes everything better!", "I love chocolate so much!", "Chocolate is so delicious!", "What is your favorite kind of chocolate?", "Let's enjoy some chocolate!", "Chocolate is very sweet!", "Chocolate brings us joy!", "Chocolate can be enjoyed by everyone!", "Chocolate is very important!", "Chocolate can be a good treat!", "Chocolate is perfect!", "Chocolate can be anything!", "Chocolate is the best!", "Chocolate is essential for everyone!"],
+   "vegetables": ["Vegetables are so healthy!", "What is your favorite vegetable?", "Vegetables can be so tasty!", "Vegetables are essential for our health!", "Vegetables are very important!", "Let's eat some vegetables!", "I love vegetables so much!", "Vegetables can be enjoyed by all!", "Vegetables make our bodies feel good!", "Vegetables are the best!", "Vegetables can be fun!", "Vegetables can be cooked in many different ways!", "Vegetables are perfect!", "Vegetables are a key ingredient!", "Vegetables can be anything!"],
+    
+  // --- NATURE & WEATHER ---
+  "sun": ["Sunshine brings such energy!", "Perfect day for adventures!", "Nature's spotlight!", "Soak in that vitamin D!", "The world shines brighter!", "The sun is a powerful source of energy!", "The sun makes the world a better place!", "The sun is important for our health!", "Let's go outside and enjoy the sun!", "I love the sun!", "The sun is very warm!", "The sun makes me feel good!", "The sun is such a beautiful thing!", "The sun is perfect!", "The sun makes everything better!"],
+  "rain": ["Perfect weather for cozy vibes!", "Nature's music!", "Everything feels fresh in the rain!", "Rain brings new beginnings!", "Time for indoor adventures!", "Rain can be so relaxing!", "I love the rain!", "Rain makes the world so peaceful!", "Rain makes me feel good!", "The sound of rain is so calming!", "Let's enjoy the rain!", "Rain is essential for our world!", "Rain is beautiful!", "Rain is very important!", "Rain is always a great thing!"],
+  "snow": ["Winter wonderland time!", "Perfect for hot chocolate!", "Nature's magic show!", "Time for snow angels!", "Everything looks magical in snow!", "I love the snow so much!", "Snow makes the world a magical place!", "Snow is very beautiful!", "Let's play in the snow!", "Snow is very fun!", "The snow makes me feel happy!", "Snow can be enjoyed by everyone!", "Snow is essential for winter!", "Snow makes everything better!", "Snow is very peaceful!"],
+    "clouds": ["Clouds are very interesting!", "Clouds can be so beautiful!", "What is your favorite kind of cloud?", "Clouds make our world more beautiful!", "I love the clouds so much!", "Clouds are very important!", "Clouds make the sky more interesting!", "Clouds can be very fun!", "Clouds make our world look better!", "Clouds are essential!", "Clouds can be a great thing to look at!", "Clouds can also be very interesting!", "Clouds are amazing!", "Clouds make me happy!", "Clouds make everything better!"],
+    "trees": ["Trees are so important for our world!", "Trees make our world look beautiful!", "Trees are very essential!", "Trees are my favorite!", "What is your favorite kind of tree?", "I love trees so much!", "Trees give us oxygen!", "Trees are very fascinating!", "Let's go for a walk in the forest!", "Trees are very essential for our world!", "Trees make our world look better!", "Trees are very fun to be around!", "Trees are the key!", "Trees are essential!", "Trees make us feel good!"],
+    "mountains": ["Mountains are majestic!", "Mountains are very beautiful!", "Mountains are my passion!", "What is your favorite mountain?", "Let's go hiking in the mountains!", "Mountains make our world look amazing!", "Mountains are so peaceful!", "Mountains are very fun!", "Mountains are very important!", "I love mountains so much!", "Mountains make us feel small!", "Mountains are so interesting!", "Mountains are a very great sight!", "Mountains are the best!", "Mountains are so cool!"],
+    "ocean": ["The ocean is so vast!", "The ocean is very beautiful!", "I love the ocean so much!", "The ocean is so mysterious!", "Let's go to the beach!", "The ocean is essential for our world!", "The ocean is so important!", "The ocean is very fun to be around!", "The ocean makes our world better!", "The ocean is a beautiful thing!", "The ocean is my passion!", "The ocean makes me happy!", "The ocean is the best!", "The ocean is very important!", "The ocean is so peaceful!"],
+    "flowers": ["Flowers are so beautiful!", "Flowers make the world look better!", "Flowers are my favorite!", "What is your favorite flower?", "I love flowers so much!", "Flowers are a great gift!", "Flowers are very important!", "Flowers are a beautiful sight!", "Flowers make us feel better!", "Flowers bring us joy!", "Flowers make me happy!", "Flowers are so beautiful!", "Flowers are the best!", "Flowers are very important for the world!", "Flowers can be gifted to anyone!"],
+   
+  // --- SPORTS & FITNESS ---
+    "workout": ["Getting stronger every day!", "Health is wealth!", "Moving towards greatness!", "Your dedication is inspiring!", "Fitness goals incoming!", "What is your favorite workout?", "Working out can be so fun!", "Working out is so important!", "Working out is the best!", "Let's workout together!", "I love to workout!", "Working out makes me feel great!", "Working out is a great way to stay healthy!", "Working out can do anything!", "Working out is essential for our bodies!"],
+    "running": ["Feel that runner's high!", "One step at a time!", "Running towards success!", "Freedom in motion!", "Breaking personal records!", "Running makes me feel free!", "What is your favorite place to run?", "Let's go for a run together!",
             ]
         };
 
@@ -39,3 +317,56 @@
         function appendMessage(message, isUser) {
             const bubble = document.createElement('div');
             bubble.className = `chat-bubble ${isUser ? 'user-message' : 'bot-message'}`;
+            bubble.textContent = message;
+            chatContainer.appendChild(bubble);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            userInput.disabled = true;
+            sendButton.disabled = true;
+
+            appendMessage(message, true);
+            userInput.value = '';
+
+            const typingIndicator = showTypingIndicator();
+
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                removeTypingIndicator(typingIndicator);
+
+                let response = null;
+                const messageLower = message.toLowerCase();
+                
+                for (const [key, responses] of Object.entries(botResponses)) {
+                    if (messageLower.includes(key)) {
+                        response = responses[Math.floor(Math.random() * responses.length)];
+                        break;
+                    }
+                }
+
+                if (!response) {
+                    const defaultResponses = botResponses.default;
+                    response = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+                }
+
+                appendMessage(response, false);
+
+            } finally {
+                userInput.disabled = false;
+                sendButton.disabled = false;
+                userInput.focus();
+            }
+        }
+
+        window.onload = () => {
+            setTimeout(() => {
+                appendMessage("Hey there! I'm excited to chat with you about anything and everything! What's on your mind?", false);
+            }, 500);
+        };
+    </script>
+</body>
+</html>
